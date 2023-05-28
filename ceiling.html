@@ -1,0 +1,215 @@
+<html>
+    <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3052351640100142" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <a href="index.html">가챠 계산기로 이동</a>
+        <div>
+            <p>기준 날짜 <input id="current_date" type="date"></p>
+        </div>
+        <div>
+            <p>오래 된 오퍼레이터</p>
+            <ol id="old">
+            </ol>
+            <p>최대 주기 오퍼레이터</p>
+            <ol id="max">
+            </ol>
+            <p>최소 주기 오퍼레이터</p>
+            <ol id="min">
+            </ol>
+        </div>
+    </body>
+    <script type="text/javascript">
+        document.getElementById('current_date').valueAsDate = new Date();
+        const operators = [
+            {
+                name: "나이팅게일",
+                date: ["2020-01-24", "2020-04-17", "2020-10-16", "2021-01-22", "2022-07-22"]
+            },
+            {
+                name: "로사",
+                date: ["2022-03-04", "2023-03-03"]
+            },
+            {
+                name: "마운틴",
+                date: ["2023-03-17"]
+            },
+            {
+                name: "마젤란",
+                date: ["2021-04-02", "2022-01-07", "2022-10-14"]
+            },
+            {
+                name: "머드락",
+                date: ["2023-02-03"]
+            },
+            {
+                name: "모스티마",
+                date: ["2021-08-06", "2021-09-03", "2022-04-29", "2022-11-25"]
+            },
+            {
+                name: "백파이프",
+                date: ["2022-01-21"]
+            },
+            {
+                name: "블레미샤인",
+                date: ["2022-12-23"]
+            },
+            {
+                name: "블레이즈",
+                date: ["2021-09-17", "2023-01-06"]
+            },
+            {
+                name: "사리아",
+                date: ["2020-02-07", "2020-04-03", "2020-08-21", "2021-06-11"
+                , "2022-02-18", "2022-06-24"]
+            },
+            {
+                name: "샤이닝",
+                date: ["2020-05-01", "2020-08-07", "2020-11-27", "2021-04-16"
+                , "2022-02-04", "2023-03-31"]
+            },
+            {
+                name: "수르트",
+                date: ["2022-11-11"]
+            },
+            {
+                name: "슈바르츠",
+                date: ["2021-06-25", "2022-10-28"]
+            },
+            {
+                name: "스즈란",
+                date: ["2022-04-15"]
+            },
+            {
+                name: "스카디",
+                date: ["2021-01-08", "2021-11-26", "2022-05-13"]
+            },
+            {
+                name: "시즈",
+                date: ["2020-03-06", "2020-06-12", "2020-09-04", "2020-12-11"
+                , "2021-04-30", "2021-11-12"]
+            },
+            {
+                name: "실버애쉬",
+                date: ["2020-07-24", "2021-03-05", "2021-10-15", "2022-06-10"]
+            },
+            {
+                name: "쏜즈",
+                date: ["2022-08-19"]
+            },
+            {
+                name: "아",
+                date: ["2021-10-29", "2023-01-20"]
+            },
+            {
+                name: "아르게토",
+                date: ["2023-04-28"]
+            },
+            {
+                name: "안젤리나",
+                date: ["2020-01-16", "2023-03-20", "2020-07-10", "2020-10-30"
+                , "2021-03-19", "2022-08-05"]
+            },
+            {
+                name: "에이야파들리",
+                date: ["2020-10-02", "2021-08-20", "2022-09-02"]
+            },
+            {
+                name: "엑시아",
+                date: ["2020-11-13", "2021-05-28", "2022-04-01", "2023-02-17"]
+            },
+            {
+                name: "위디",
+                date: ["2022-05-27"]
+            },
+            {
+                name: "유넥티스",
+                date: ["2022-09-30"]
+            },
+            {
+                name: "이프리트",
+                date: ["2020-02-21", "2020-05-15", "2020-06-26", "2021-02-19"
+                , "2021-07-23", "2023-04-14"]
+            },
+            {
+                name: "첸",
+                date: ["2021-02-05", "2021-07-09", "2021-12-24", "2022-09-16"]
+            },
+            {
+                name: "케오베",
+                date: ["2021-12-10", "2023-05-26"]
+            },
+            {
+                name: "팬텀",
+                date: ["2022-07-08"]
+            },
+            {
+                name: "헬라그",
+                date: ["2021-05-14", "2021-10-01", "2022-12-09"]
+            },
+            {
+                name: "호시구마",
+                date: ["2020-05-29", "2020-09-18", "2020-12-25", "2022-03-18", "2023-05-12"]
+            },
+            {
+                name: "사가",
+                date: ["2023-01-01"]
+            },
+            {
+                name: "패신저",
+                date: ["2023-01-01"]
+            },
+        ]
+        const millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+        operators1 = JSON.parse(JSON.stringify(operators));
+        periods = operators1
+            .filter(x => x.date.length != 1)
+            .map(x => {
+                x.date = x.date.slice(-2)
+                return x
+            })
+            .map(x => {
+                date1 = new Date(x.date[1])
+                date2 = new Date(x.date[0])
+                x.diff = (date1 - date2) / millisecondsPerDay
+                return x
+            })
+            .sort((a, b) => a.diff - b.diff);
+        
+        num=10
+        for(let i = 0; i<num; i++){
+            const max = document.getElementById("max");
+            const li = max
+                .appendChild(document.createElement("li"));
+            li.textContent = `${periods[i].name} (${periods[i].diff})`
+        }
+        for(let i = 0; i<num; i++){
+            const min = document.getElementById("min");
+            const li = min
+                .appendChild(document.createElement("li"));
+            li.textContent = `${periods[periods.length - i - 1].name} (${periods[periods.length - i - 1].diff})`
+        }
+
+        operators2 = JSON.parse(JSON.stringify(operators));
+        olds = operators2
+            .map(x => {
+                x.old = new Date(x.date[x.date.length-1])
+                return x
+            })
+            .sort((a, b) => a.old - b.old);
+        for(let i = 0; i<num; i++){
+            const old = document.getElementById("old");
+            const li = old
+                .appendChild(document.createElement("li"));
+            targetDate = olds[i].old
+            year = targetDate.getFullYear();
+            month = targetDate.getMonth() + 1;
+            day = targetDate.getDate();
+            const today = document.getElementById("current_date").valueAsDate;
+            const diff = (today - targetDate) / millisecondsPerDay
+            li.textContent = `${olds[i].name} (${year}-${month}-${day}, ${diff})`
+        }
+
+    </script>
+</html>
