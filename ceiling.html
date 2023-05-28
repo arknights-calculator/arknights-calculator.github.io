@@ -183,13 +183,13 @@
             const max = document.getElementById("max");
             const li = max
                 .appendChild(document.createElement("li"));
-            li.textContent = `${periods[i].name} (${periods[i].diff}일)`
+            li.textContent = `${periods[periods.length - i - 1].name} (${periods[periods.length - i - 1].diff}일)`
         }
         for(let i = 0; i<num; i++){
             const min = document.getElementById("min");
             const li = min
                 .appendChild(document.createElement("li"));
-            li.textContent = `${periods[periods.length - i - 1].name} (${periods[periods.length - i - 1].diff}일)`
+            li.textContent = `${periods[i].name} (${periods[i].diff}일)`
         }
 
         operators2 = JSON.parse(JSON.stringify(operators));
