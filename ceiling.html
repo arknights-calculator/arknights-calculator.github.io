@@ -6,7 +6,7 @@
     <body>
         <a href="index.html">가챠 계산기로 이동</a>
         <div>
-            <p>기준 날짜 <input id="current_date" type="date"></p>
+            <p>기준 날짜 <input id="current_date" type="date", onchange="changeDate()"></p>
         </div>
         <div>
             <p>오래 된 오퍼레이터</p>
@@ -162,54 +162,76 @@
             },
         ]
         const millisecondsPerDay = 1000 * 60 * 60 * 24;
-
-        operators1 = JSON.parse(JSON.stringify(operators));
-        periods = operators1
-            .filter(x => x.date.length != 1)
-            .map(x => {
-                x.date = x.date.slice(-2)
-                return x
-            })
-            .map(x => {
-                date1 = new Date(x.date[1])
-                date2 = new Date(x.date[0])
-                x.diff = (date1 - date2) / millisecondsPerDay
-                return x
-            })
-            .sort((a, b) => a.diff - b.diff);
+        changeDate();
         
-        num=10
-        for(let i = 0; i<num; i++){
-            const max = document.getElementById("max");
-            const li = max
-                .appendChild(document.createElement("li"));
-            li.textContent = `${periods[periods.length - i - 1].name} (${periods[periods.length - i - 1].diff}일)`
-        }
-        for(let i = 0; i<num; i++){
-            const min = document.getElementById("min");
-            const li = min
-                .appendChild(document.createElement("li"));
-            li.textContent = `${periods[i].name} (${periods[i].diff}일)`
-        }
-
-        operators2 = JSON.parse(JSON.stringify(operators));
-        olds = operators2
-            .map(x => {
-                x.old = new Date(x.date[x.date.length-1])
+        function changeDate(){
+            currentDate = document.getElementById("current_date").valueAsDate
+            originalOperators = JSON.parse(JSON.stringify(operators));
+            datedOperators = originalOperators.map(x => {
+                x.date = x.date.filter(d => new Date(d)<=currentDate)
                 return x
-            })
-            .sort((a, b) => a.old - b.old);
-        for(let i = 0; i<num; i++){
-            const old = document.getElementById("old");
-            const li = old
-                .appendChild(document.createElement("li"));
-            targetDate = olds[i].old
-            year = targetDate.getFullYear();
-            month = targetDate.getMonth() + 1;
-            day = targetDate.getDate();
-            const today = document.getElementById("current_date").valueAsDate;
-            const diff = (today - targetDate) / millisecondsPerDay
-            li.textContent = `${olds[i].name} (${year}-${month}-${day}, ${diff}일)`
+            }).filter(x => x.date.length != 0)
+
+            operators1 = JSON.parse(JSON.stringify(datedOperators));
+            periods = operators1
+                .filter(x => x.date.length != 1)
+                .map(x => {
+                    x.date = x.date.slice(-2)
+                    return x
+                })
+                .map(x => {
+                    date1 = new Date(x.date[1])
+                    date2 = new Date(x.date[0])
+                    x.diff = (date1 - date2) / millisecondsPerDay
+                    return x
+                })
+                .sort((a, b) => a.diff - b.diff);
+            
+            const max = document.getElementById("max")
+            while (max.firstChild) {
+                max.firstChild.remove()
+            }
+            const min = document.getElementById("min")
+            while (min.firstChild) {
+                min.firstChild.remove()
+            }
+            const old = document.getElementById("old")
+            while (old.firstChild) {
+                old.firstChild.remove()
+            }
+            
+            num=10
+            for(let i = 0; i<num; i++){
+                const max = document.getElementById("max");
+                const li = max
+                    .appendChild(document.createElement("li"));
+                li.textContent = `${periods[periods.length - i - 1].name} (${periods[periods.length - i - 1].diff}일)`
+            }
+            for(let i = 0; i<num; i++){
+                const min = document.getElementById("min");
+                const li = min
+                    .appendChild(document.createElement("li"));
+                li.textContent = `${periods[i].name} (${periods[i].diff}일)`
+            }
+
+            operators2 = JSON.parse(JSON.stringify(datedOperators));
+            olds = operators2
+                .map(x => {
+                    x.old = new Date(x.date[x.date.length-1])
+                    return x
+                })
+                .sort((a, b) => a.old - b.old);
+            for(let i = 0; i<num; i++){
+                const old = document.getElementById("old");
+                const li = old
+                    .appendChild(document.createElement("li"));
+                targetDate = olds[i].old
+                year = targetDate.getFullYear();
+                month = targetDate.getMonth() + 1;
+                day = targetDate.getDate();
+                const diff = (currentDate - targetDate) / millisecondsPerDay
+                li.textContent = `${olds[i].name} (${year}-${month}-${day}, ${diff}일)`
+            }
         }
 
     </script>
