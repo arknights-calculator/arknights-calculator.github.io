@@ -26,8 +26,8 @@
         <div>
             <p>현재 보유량</p>
             <ui>
-                <li><b>오리지늄</b><input class="current" id="originium" type="number" onchange="calculate()"></li>
                 <li><b>합성옥</b><input class="current" id="cube" type="number" onchange="calculate()"></li>
+                <li><b>오리지늄</b><input class="current" id="originium" type="number" onchange="calculate()"></li>
                 <li><b>티켓</b><input class="current" id="ticket" type="number" onchange="calculate()"></li> 
                 <li><b id="current">현재 뽑기량: </b></li>
             </ui>
@@ -82,7 +82,7 @@
 
         function calculate(){
             currents = document.getElementsByClassName("current")
-            currentCount = Number(currents[0].value/10*3) + Number(currents[1].value/600) + Number(currents[2].value)
+            currentCount = Number(currents[0].value/600) + Number(currents[1].value/10*3) + Number(currents[2].value)
             document.getElementById("current").innerHTML = "현재 뽑기량: " + currentCount
             if(dateDifference === 0){
                 return;
