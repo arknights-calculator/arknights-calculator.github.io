@@ -1,15 +1,69 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3052351640100142" crossorigin="anonymous"></script>
-    </head>
-    <body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <style>
+        html {
+            -webkit-text-size-adjust: 100%;
+            height: 100%;
+        }
+
+        body {   
+            max-width: 600px;
+            width:100%;
+            height:100%; 
+            margin-top: 0px;
+            margin-right: auto;
+            margin-bottom: 0px;
+            margin-left: auto;
+            background: #E9E9E9;
+            padding: 0px;
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+            letter-spacing: -.3px;
+            justify-content: center;
+            align-items: center;
+            -webkit-box-align: center;
+        }
+
+        #content {
+            background: #FFFFFF;
+            min-height: 100%;
+        }
+
+        h2 {
+            text-align: left;
+        }
+
+        .container {
+            margin-bottom: 20px;
+        }
+
+        .container p {
+            margin: 10px 0;
+        }
+
+        .container input[type="number"] {
+            width: 80px;
+        }
+
+        .container input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3052351640100142" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="content">
         <a href="ceiling.html">정가 통계로 이동</a>
-        <div>
+        <div class="container">
+            <h2>이벤트를 선택하세요</h2>
             <p id="current_date">현재 날짜</p>
-        </div>
-        <div>
-            <p>이벤트
+            <p>
+                이벤트
                 <select name="events" id="events" onchange="selectEvent()">
                     <option value="2023-06-15" originium="30">브레이크 디 아이스 (재개방)</option>
                     <option value="2023-06-29" originium="29">왓 더 파이어라이트 캐스츠(힐리드)</option>
@@ -23,37 +77,37 @@
             </p>
             <p id="event_date">예상 날짜</p>
         </div>
-        <div>
-            <p>현재 보유량</p>
-            <ui>
+        <div class="container">
+            <h2>현재 보유량</h2>
+            <ul>
                 <li><b>합성옥</b><input class="current" id="cube" type="number" onchange="calculate()"></li>
                 <li><b>오리지늄</b><input class="current" id="originium" type="number" onchange="calculate()"></li>
-                <li><b>티켓</b><input class="current" id="ticket" type="number" onchange="calculate()"></li> 
-                <li><b id="current">현재 뽑기량: </b></li>
-            </ui>
-        </div>
-        <div>
-            <p>무료 생성량</p>
-            <ul>
-                <li>출석, 임무 <input id="default" type="checkbox" checked=true onchange="calculate()"/></li>
-                <li>섬멸 <input id="weekly" type="checkbox" checked=true onchange="calculate()"/></li>
-                <li>초티1단계 <input id="green1" type="checkbox" checked=true onchange="calculate()"/></li>
-                <li>초티2단계 <input id="green2" type="checkbox" onchange="calculate()"/></li>
-                <li>노티 <input id="yellow" type="number" onchange="calculate()"/></li>
+                <li><b>티켓</b><input class="current" id="ticket" type="number" onchange="calculate()"></li>
+                <li><b id="current">현재 뽑기량:</b></li>
             </ul>
         </div>
-        <div>
-            <p>유료 생성량</p>
+        <div class="container">
+            <h2>무료 생성량</h2>
             <ul>
-                <li>먼슬리 <input id="monthly" type="checkbox" checked=true onchange="calculate()"/></li>
-                <li>월간헤헌권 <input id="monthlyTicket" type="number" onchange="calculate()"/></li>
+                <li>출석, 임무 <input id="default" type="checkbox" checked=true onchange="calculate()"></li>
+                <li>섬멸 <input id="weekly" type="checkbox" checked=true onchange="calculate()"></li>
+                <li>초티1단계 <input id="green1" type="checkbox" checked=true onchange="calculate()"></li>
+                <li>초티2단계 <input id="green2" type="checkbox" onchange="calculate()"></li>
+                <li>노티 <input id="yellow" type="number" onchange="calculate()"></li>
+            </ul>
+        </div>
+        <div class="container">
+            <h2>유료 생성량</h2>
+            <ul>
+                <li>먼슬리 <input id="monthly" type="checkbox" checked=true onchange="calculate()"></li>
+                <li>월간헤헌권 <input id="monthlyTicket" type="number" onchange="calculate()"></li>
             </ul>
         </div>
         <div>
             <p id="result">예상뽑기량</p>
         </div>
-        <div>한정 픽업은 무료 24뽑 추가해야함, 기타 출석 이벤, 점검 보상 등은 제외</div>
-    </body>
+        <div>한정 픽업은 무료 24뽑 추가해야 함, 기타 출석 이벤트, 점검 보상 등은 제외</div>
+    </div>
     <script type="text/javascript">
         currentDate = new Date();
         year = currentDate.getFullYear();
